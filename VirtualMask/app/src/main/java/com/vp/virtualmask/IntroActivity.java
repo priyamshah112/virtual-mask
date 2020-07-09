@@ -6,6 +6,8 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -15,6 +17,13 @@ public class IntroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_intro);
 
         button = (Button) findViewById(R.id.gender_selected);
@@ -50,7 +59,7 @@ public class IntroActivity extends AppCompatActivity {
             toast.show();
         }
         else {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, FullscreenActivity.class);
             startActivity(intent);
             finish();
         }

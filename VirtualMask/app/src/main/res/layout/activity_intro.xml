@@ -11,9 +11,9 @@
         android:id="@+id/men_card"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="225dp"
+        android:layout_marginStart="33dp"
         android:layout_marginBottom="400dp"
         app:cardBackgroundColor="#7DD7E7">
 
@@ -60,7 +60,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="-1dp"
+        android:layout_marginBottom="0dp"
         android:src="@drawable/bike" />
 
     <Button

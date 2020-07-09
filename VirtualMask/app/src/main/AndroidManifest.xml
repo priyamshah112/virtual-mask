@@ -9,7 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IntroActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_fullscreen"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".IntroActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
@@ -19,9 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"
