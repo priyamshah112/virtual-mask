@@ -16,4 +16,5 @@
     <string name="dummy_content"></string>
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="title_activity_profile">FullscreenActivity</string>
+    <string name="title_activity_splash_screen">FullscreenActivity</string>
 </resources>

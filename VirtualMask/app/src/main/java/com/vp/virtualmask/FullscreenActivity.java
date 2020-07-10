@@ -7,10 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -39,6 +45,9 @@ public class FullscreenActivity extends AppCompatActivity {
     private View mControlsView;
     private boolean mVisible;
     public ImageButton Demo_button;
+    FloatingActionButton fab_menu,fab_setting,fab_profile;
+    Animation fabOpen,fabClose,fabClockwise,fabAntiClockwise;
+    boolean isOpen= false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +92,61 @@ public class FullscreenActivity extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
+        fab_menu=findViewById(R.id.menuFloatingActionButton);
+        fab_setting=findViewById(R.id.settingFloatingActionButton);
+        fab_profile=findViewById(R.id.profileFloatingActionButton);
+
+
+        fabOpen= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
+        fabClose= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+        fabClockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_clockwise);
+        fabAntiClockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_anticlockwise);
+
+        fab_menu.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(isOpen){
+                    fab_profile.startAnimation(fabClose);
+                    fab_setting.startAnimation(fabClose);
+                    fab_menu.startAnimation(fabClockwise);
+
+                    fab_setting.setClickable(false);
+                    fab_profile.setClickable(false);
+                    Log.w("getting it in herer"+isOpen,"just in the invisibility functionality");
+                    isOpen=false;
+
+                }
+                else{
+                    fab_profile.startAnimation(fabOpen);
+                    fab_setting.startAnimation(fabOpen);
+                    fab_menu.startAnimation(fabAntiClockwise);
+
+                    Log.w("getting it in herer"+isOpen,"just in the visibility functionality");
+                    fab_setting.setClickable(true);
+                    fab_profile.setClickable(true);
+
+                    isOpen=true;
+
+                }
+            }
+        });
+        fab_setting.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(FullscreenActivity.this, "tou clicked settings",Toast.LENGTH_SHORT).show();
+                Log.w("eneter","setting on the go");
+            }
+        }));
+        fab_profile.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(FullscreenActivity.this, "tou clicked profile",Toast.LENGTH_SHORT).show();
+                Log.w("eneter","profile on the go");
+
+            }
+        }));
     }
 
     @Override

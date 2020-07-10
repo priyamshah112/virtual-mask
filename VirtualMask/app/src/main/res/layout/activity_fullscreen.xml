@@ -61,41 +61,84 @@
 
         <ImageButton
             android:id="@+id/cough_image"
-            android:layout_width="316dp"
-            android:layout_height="450dp"
+            android:layout_width="410dp"
+            android:layout_height="459dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="58dp"
-            android:layout_marginEnd="36dp"
-            android:layout_marginBottom="85dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="66dp"
+            android:background="@color/colorcough"
             app:srcCompat="@drawable/man_cough" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="61dp"
+            android:layout_above="@+id/cough_image"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="67dp"
-            android:layout_marginBottom="544dp"
+            android:layout_marginEnd="84dp"
+            android:layout_marginBottom="11dp"
             android:fontFamily="serif"
             android:text="PLease Wear Your Mask \n And click the Image"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/menuFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="31dp"
+            android:layout_marginBottom="24dp"
+            android:clickable="true"
+            app:backgroundTint="@color/floatbutton"
+            app:srcCompat="@drawable/ic_baseline_menu_24"
+            tools:ignore="VectorDrawableCompat" />
+
         <ImageButton
             android:id="@+id/mask_image"
-            android:layout_width="313dp"
-            android:layout_height="455dp"
+            android:layout_width="match_parent"
+            android:layout_height="458dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="56dp"
-            android:layout_marginEnd="41dp"
-            android:layout_marginBottom="83dp"
+            android:layout_marginStart="-2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="69dp"
+            android:background="@color/colormask"
             app:srcCompat="@drawable/man_mask" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/settingFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/menuFloatingActionButton"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="31dp"
+            android:layout_marginBottom="18dp"
+            android:clickable="false"
+            android:visibility="invisible"
+            app:backgroundTint="@color/floatbutton"
+            app:srcCompat="@drawable/ic_baseline_settings_24"
+            tools:ignore="VectorDrawableCompat" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/profileFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/settingFloatingActionButton"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="17dp"
+            android:clickable="false"
+            android:visibility="invisible"
+            app:backgroundTint="@color/floatbutton"
+            app:srcCompat="@drawable/ic_baseline_account_circle_24"
+            tools:ignore="VectorDrawableCompat" />
 
     </RelativeLayout>
 
