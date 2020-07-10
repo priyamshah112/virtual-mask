@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class IntroActivity extends AppCompatActivity {
@@ -18,11 +19,8 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_intro);
 
@@ -33,12 +31,13 @@ public class IntroActivity extends AppCompatActivity {
                 openNewActivity();
             }
         });
-
+        final TextView tv = (TextView)findViewById(R.id.textView);
         CardView card_view_men = (CardView) findViewById(R.id.men_card); // creating a CardView and assigning a value.
         card_view_men.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 genderFlag=1;
+                tv.setText("Welcome Sir");//Gentleman
             }
         });
 
@@ -47,6 +46,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 genderFlag=2;
+                tv.setText("Welcome Ma'am");//lady
             }
         });
     }
@@ -59,7 +59,7 @@ public class IntroActivity extends AppCompatActivity {
             toast.show();
         }
         else {
-            Intent intent = new Intent(this, FullscreenActivity.class);
+            Intent intent = new Intent(this, VirtualMask.class);
             startActivity(intent);
             finish();
         }

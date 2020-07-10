@@ -14,7 +14,8 @@
     <string name="title_activity_main">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content"></string>
-    <string name="title_activity_fullscreen">FullscreenActivity</string>
-    <string name="title_activity_profile">FullscreenActivity</string>
-    <string name="title_activity_splash_screen">FullscreenActivity</string>
+    <string name="title_activity_fullscreen">VirtualMask</string>
+    <string name="title_activity_profile">VirtualMask</string>
+    <string name="title_activity_splash_screen">VirtualMask</string>
+    <string name="title_activity_select_gender">VirtualMask</string>
 </resources>

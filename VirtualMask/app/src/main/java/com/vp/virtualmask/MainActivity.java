@@ -1,5 +1,7 @@
 package com.vp.virtualmask;
 
+//NOT NEEDED at but may be required in future so still kept
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;

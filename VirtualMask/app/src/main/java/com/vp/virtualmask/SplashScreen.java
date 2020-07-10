@@ -1,5 +1,8 @@
 package com.vp.virtualmask;
 
+//NOT NEED YET BUT MAY BE NEEDED WHEN TO LOAD NOTIFICATION
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,7 +12,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class SplashScreen extends AppCompatActivity {
-
     private static final long SPLASH_TIME_OUT = 7000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

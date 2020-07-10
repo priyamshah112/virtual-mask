@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
+    android:textAlignment="center"
     tools:context=".IntroActivity">
 
     <androidx.cardview.widget.CardView
@@ -15,7 +16,11 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="33dp"
         android:layout_marginBottom="400dp"
-        app:cardBackgroundColor="#7DD7E7">
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="#7DD7E7"
+        android:stateListAnimator="@anim/lift_on_touch">
+        <!--        android:clickable="true"   this is needed but as i saw no effect so i removed it link:https://stackoverflow.com/questions/26942434/ripple-effect-on-android-lollipop-cardview-->
+        <!--CardView lift on touch https://stackoverflow.com/questions/44393762/cardview-lift-on-touch-->
 
         <ImageView
             android:id="@+id/men"
@@ -32,7 +37,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="33dp"
         android:layout_marginBottom="400dp"
-        app:cardBackgroundColor="#7DD7E7">
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="#7DD7E7"
+        android:stateListAnimator="@anim/lift_on_touch">
 
         <ImageView
             android:id="@+id/women"
@@ -43,24 +50,28 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="285dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="133dp"
+        android:layout_marginEnd="58dp"
         android:layout_marginBottom="578dp"
         android:fontFamily="serif"
         android:text="Select Gender"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="413dp"
+        android:layout_alignWithParentIfMissing="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
+        android:scaleType="fitEnd"
         android:src="@drawable/bike" />
 
     <Button
