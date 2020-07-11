@@ -6,17 +6,34 @@ import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class ProfileActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity {
+
+    private ProgressBar progressBar;
+    private SeekBar seekBar;
+    private TextView distanceText, genderRadio,switchBtn_txtView ;
+    private Switch sw1;
+    RadioGroup radioGroup;
+    RadioButton radioButton;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -100,7 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_setting);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
@@ -114,8 +131,77 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-    }
 
+
+        /*
+         *   Progress bar and seeker Bar for setting up the location thresh hold setting functionality implemented
+         */
+        distanceText = (TextView) findViewById(R.id.distance);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressBar.setProgress(progress);
+                distanceText.setText("" + progress + " Meter");
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+
+
+
+        /*
+         *   Radio Button for gender functionality implemented
+         */
+        radioGroup = findViewById(R.id.radioGroup);
+        genderRadio = findViewById(R.id.text_view_selected);
+        Button buttonApply = findViewById(R.id.button_apply);
+        buttonApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //int radioId = radioGroup.getCheckedRadioButtonId();
+                //radioButton = findViewById(radioId);
+                //genderRadio.setText("Your choice: " + radioButton.getText());
+            }
+        });
+
+
+
+        //if (sw1.isChecked())
+        //https://www.tutlane.com/tutorial/android/android-switch-on-off-button-with-examples
+        //final TextView switchBtn_txtView = (TextView) findViewById(R.id.switchBtn_txtView);
+
+
+        /*
+        *   Switch Bar for notification setting functionality implemented
+         */
+        sw1 = (Switch)findViewById(R.id.switchButton);
+        switchBtn_txtView = (TextView) findViewById(R.id.switchBtn_txtView);
+        sw1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    switchBtn_txtView.setText("Notification : Enabled");
+                }
+                else {
+                    switchBtn_txtView.setText("Notification : Disabled");
+                }
+            }
+        });
+    }
+    public void checkButton(View v) {
+        int radioId = radioGroup.getCheckedRadioButtonId();
+        radioButton = findViewById(radioId);
+//        Toast.makeText(this, "Selected Radio Button: " + radioButton.getText(),
+//                Toast.LENGTH_SHORT).show();
+        genderRadio.setText("Your choice: " + radioButton.getText());
+    }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);

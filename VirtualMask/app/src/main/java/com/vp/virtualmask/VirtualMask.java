@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -111,6 +112,8 @@ public class VirtualMask extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(VirtualMask.this, "tou clicked settings",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(VirtualMask.this, SettingActivity.class);
+                startActivity(intent);
             }
         }));
         fab_profile.setOnClickListener((new View.OnClickListener() {

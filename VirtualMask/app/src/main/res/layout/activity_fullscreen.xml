@@ -68,6 +68,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="1dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginBottom="66dp"
             android:background="@color/colorcough"
             app:srcCompat="@drawable/man_cough" />
@@ -115,7 +116,9 @@
             android:layout_marginEnd="2dp"
             android:layout_marginBottom="69dp"
             android:background="@color/colormask"
-            app:srcCompat="@drawable/man_mask" />
+            android:scaleType="center"
+            app:srcCompat="@drawable/man_mask"
+            android:layout_gravity="center_vertical" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/settingFloatingActionButton"
