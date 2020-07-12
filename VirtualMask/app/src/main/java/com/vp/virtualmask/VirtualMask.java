@@ -3,9 +3,17 @@ package com.vp.virtualmask;
 import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,15 +27,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 //https://www.youtube.com/watch?v=zpCRElrwXg8 this is the link for the floating button menu
 
 public class VirtualMask extends AppCompatActivity {
 
+    // Geolocation
+    private static final int REQUEST_PERMISSIONS = 100;
+    boolean boolean_permission;
+    Double latitude = 0.0, longitude = 0.0;
+
+    Geocoder geocoder;
+
+    //Animations
     private static final boolean AUTO_HIDE = true;
-
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-
     private static final int UI_ANIMATION_DELAY = 300;
 
     private View mContentView;
@@ -37,11 +54,24 @@ public class VirtualMask extends AppCompatActivity {
     FloatingActionButton fab_menu,fab_setting,fab_profile;
     Animation fabOpen,fabClose,fabClockwise,fabAntiClockwise;
     boolean isOpen= false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_fullscreen);
+
+        geocoder = new Geocoder(this, Locale.getDefault());
+        fn_permission();
+        System.out.println("GeoLocation service started");
+        Intent intent = new Intent(getApplicationContext(), GoogleService.class);
+        startService(intent);
+
+        System.out.println("Latitude ");
+        System.out.println(get_lat());
+        System.out.println("Longitude");
+        System.out.println(get_long());
+        System.out.println("Current Time");
+        System.out.println(get_current_time());
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
@@ -214,4 +244,79 @@ public class VirtualMask extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
+    private void fn_permission() {
+        if ((ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+
+            if ((ActivityCompat.shouldShowRequestPermissionRationale(VirtualMask.this, android.Manifest.permission.ACCESS_FINE_LOCATION))) {
+
+
+            } else {
+                ActivityCompat.requestPermissions(VirtualMask.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION
+
+                        },
+                        REQUEST_PERMISSIONS);
+
+            }
+        } else {
+            boolean_permission = true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUEST_PERMISSIONS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    boolean_permission = true;
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please allow the permission", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            latitude = Double.valueOf(intent.getStringExtra("latutide"));
+            longitude = Double.valueOf(intent.getStringExtra("longitude"));
+
+//            System.out.println(latitude);
+//            System.out.println(longitude);
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(broadcastReceiver, new IntentFilter(GoogleService.str_receiver));
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(broadcastReceiver);
+    }
+
+    public double get_lat(){
+        return latitude;
+    }
+
+    public double get_long(){
+        return longitude;
+    }
+
+    public String get_current_time(){
+        Long tsLong = System.currentTimeMillis()/1000;
+        String ts = tsLong.toString();
+        return ts;
+    }
+
 }
