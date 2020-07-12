@@ -14,7 +14,7 @@ import android.view.View;
 public class SplashScreenActivity extends AppCompatActivity {
 
     private static final boolean AUTO_HIDE = true;
-    private static final long SPLASH_TIME_OUT = 8000;
+    private static final long SPLASH_TIME_OUT = 6000;
 
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
