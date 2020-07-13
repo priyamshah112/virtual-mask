@@ -10,15 +10,15 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/men_card"
-        android:layout_width="205dp"
-        android:layout_height="365dp"
+        android:layout_width="175dp"
+        android:layout_height="400dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="155dp"
-        android:layout_toStartOf="@+id/women_card"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="147dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:stateListAnimator="@anim/lift_on_touch"
-        app:cardBackgroundColor="colorbg">
+        app:cardBackgroundColor="@android:color/transparent">
         <!--        android:clickable="true"   this is needed but as i saw no effect so i removed it link:https://stackoverflow.com/questions/26942434/ripple-effect-on-android-lollipop-cardview-->
         <!--CardView lift on touch https://stackoverflow.com/questions/44393762/cardview-lift-on-touch-->
 
@@ -26,26 +26,26 @@
             android:id="@+id/men"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/men1" />
+            app:srcCompat="@drawable/menmodel" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/women_card"
-        android:layout_width="208dp"
-        android:layout_height="365dp"
+        android:layout_width="175dp"
+        android:layout_height="400dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="155dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="147dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:stateListAnimator="@anim/lift_on_touch"
-        app:cardBackgroundColor="colorbg">
+        app:cardBackgroundColor="@android:color/transparent">
 
         <ImageView
             android:id="@+id/women"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/women1" />
+            app:srcCompat="@drawable/womenmodel" />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -55,8 +55,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:layout_marginEnd="112dp"
-        android:layout_marginBottom="587dp"
+        android:layout_marginEnd="63dp"
+        android:layout_marginBottom="573dp"
         android:fontFamily="serif"
         android:gravity="center"
         android:text="Select Gender"
@@ -69,8 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="128dp"
-        android:layout_marginBottom="71dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/round_button"
         android:fontFamily="serif"
         android:text="Get Started"
@@ -78,86 +78,13 @@
         android:textSize="18sp"
         android:textStyle="bold|italic" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="458dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="-2dp"
+        app:srcCompat="@drawable/bgintro" />
 </RelativeLayout>
-
-
-<!--<androidx.cardview.widget.CardView-->
-<!--android:id="@+id/men_card"-->
-<!--android:layout_width="150dp"-->
-<!--android:layout_height="150dp"-->
-<!--android:layout_alignParentStart="true"-->
-<!--android:layout_alignParentBottom="true"-->
-<!--android:layout_marginStart="33dp"-->
-<!--android:layout_marginBottom="400dp"-->
-<!--android:foreground="?android:attr/selectableItemBackground"-->
-<!--app:cardBackgroundColor="#7DD7E7"-->
-<!--android:stateListAnimator="@anim/lift_on_touch">-->
-<!--&lt;!&ndash;        android:clickable="true"   this is needed but as i saw no effect so i removed it link:https://stackoverflow.com/questions/26942434/ripple-effect-on-android-lollipop-cardview&ndash;&gt;-->
-<!--&lt;!&ndash;CardView lift on touch https://stackoverflow.com/questions/44393762/cardview-lift-on-touch&ndash;&gt;-->
-
-<!--<ImageView-->
-<!--    android:id="@+id/men"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="150dp"-->
-<!--    app:srcCompat="@drawable/men" />-->
-<!--</androidx.cardview.widget.CardView>-->
-
-<!--<androidx.cardview.widget.CardView-->
-<!--android:id="@+id/women_card"-->
-<!--android:layout_width="150dp"-->
-<!--android:layout_height="150dp"-->
-<!--android:layout_alignParentEnd="true"-->
-<!--android:layout_alignParentBottom="true"-->
-<!--android:layout_marginEnd="33dp"-->
-<!--android:layout_marginBottom="400dp"-->
-<!--android:foreground="?android:attr/selectableItemBackground"-->
-<!--app:cardBackgroundColor="#7DD7E7"-->
-<!--android:stateListAnimator="@anim/lift_on_touch">-->
-
-<!--<ImageView-->
-<!--    android:id="@+id/women"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="150dp"-->
-<!--    app:srcCompat="@drawable/women" />-->
-<!--</androidx.cardview.widget.CardView>-->
-
-<!--<TextView-->
-<!--android:id="@+id/textView"-->
-<!--android:layout_width="285dp"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_alignParentEnd="true"-->
-<!--android:layout_alignParentBottom="true"-->
-<!--android:layout_marginEnd="58dp"-->
-<!--android:layout_marginBottom="578dp"-->
-<!--android:fontFamily="serif"-->
-<!--android:text="Select Gender"-->
-<!--android:layout_gravity="center"-->
-<!--android:gravity="center"-->
-<!--android:textSize="20sp"-->
-<!--android:textStyle="bold" />-->
-
-<!--<pl.droidsonroids.gif.GifImageView-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="413dp"-->
-<!--android:layout_alignWithParentIfMissing="true"-->
-<!--android:layout_alignParentEnd="true"-->
-<!--android:layout_alignParentBottom="true"-->
-<!--android:layout_marginEnd="0dp"-->
-<!--android:layout_marginBottom="0dp"-->
-<!--android:scaleType="fitEnd"-->
-<!--android:src="@drawable/bike" />-->
-
-<!--<Button-->
-<!--android:id="@+id/gender_selected"-->
-<!--android:layout_width="260dp"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_alignParentEnd="true"-->
-<!--android:layout_alignParentBottom="true"-->
-<!--android:layout_marginEnd="66dp"-->
-<!--android:layout_marginBottom="27dp"-->
-<!--android:background="@drawable/round_button"-->
-<!--android:fontFamily="serif"-->
-<!--android:text="Get Started"-->
-<!--android:textAlignment="center"-->
-<!--android:textSize="18sp"-->
-<!--android:textStyle="bold|italic" />-->

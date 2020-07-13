@@ -59,37 +59,47 @@
 
         </RelativeLayout>
 
+<!--        <ImageButton-->
+<!--            android:id="@+id/cough_image"-->
+<!--            android:layout_width="271dp"-->
+<!--            android:layout_height="679dp"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:layout_marginStart="79dp"-->
+<!--            android:layout_marginEnd="61dp"-->
+<!--            android:layout_marginBottom="1dp"-->
+<!--            android:background="@color/colorcough"-->
+<!--            app:srcCompat="@drawable/menmodel" />-->
+        <!--        <TextView-->
+<!--            android:id="@+id/textView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginBottom="339dp"-->
+<!--            android:fontFamily="serif"-->
+<!--            android:gravity="center"-->
+<!--            android:text="PLease Wear Your Mask \n And click the Image"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textStyle="bold" />-->
+
         <ImageButton
             android:id="@+id/cough_image"
-            android:layout_width="410dp"
-            android:layout_height="459dp"
+            android:layout_width="268dp"
+            android:layout_height="681dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="1dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="66dp"
+            android:layout_marginStart="81dp"
+            android:layout_marginEnd="61dp"
+            android:layout_marginBottom="4dp"
             android:background="@color/colorcough"
-            app:srcCompat="@drawable/man_cough" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/cough_image"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="21dp"
-            android:fontFamily="serif"
-            android:gravity="center"
-            android:text="PLease Wear Your Mask \n And click the Image"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:scaleType="center"
+            app:srcCompat="@drawable/menmodel" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/menuFloatingActionButton"
@@ -106,19 +116,18 @@
 
         <ImageButton
             android:id="@+id/mask_image"
-            android:layout_width="match_parent"
-            android:layout_height="458dp"
+            android:layout_width="268dp"
+            android:layout_height="681dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="-2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="69dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="79dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginBottom="4dp"
             android:background="@color/colormask"
             android:scaleType="center"
-            app:srcCompat="@drawable/man_mask"
-            android:layout_gravity="center_vertical" />
+            app:srcCompat="@drawable/menmodelmask" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/settingFloatingActionButton"
@@ -147,6 +156,23 @@
             app:backgroundTint="@color/floatbutton"
             app:srcCompat="@drawable/ic_baseline_account_circle_24"
             tools:ignore="VectorDrawableCompat" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="345dp"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:text="PLease Wear Your Mask \n And click the Image"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
