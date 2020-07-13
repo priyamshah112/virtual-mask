@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/colormask"
     tools:context=".SettingActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -106,14 +106,18 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:onClick="checkButton"
-                android:text="Male" />
+                android:text="Male"
+                android:textColorHighlight="@color/colormask"
+                android:textColorLink="@color/colormask" />
 
             <RadioButton
                 android:id="@+id/radio_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="checkButton"
-                android:text="Female" />
+                android:text="Female"
+                android:textColorHighlight="@color/colormask"
+                android:textColorLink="@color/colormask" />
         </RadioGroup>
 
         <TextView
@@ -139,9 +143,10 @@
             android:layout_marginStart="75dp"
             android:layout_marginEnd="75dp"
             android:layout_marginBottom="74dp"
-            android:background="@drawable/round_button"
+            android:background="@drawable/round_button_floatcolor"
             android:fontFamily="serif"
             android:text="APPLY"
+            android:textColor="@color/colormask"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold|italic" />

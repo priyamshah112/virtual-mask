@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FDE4A8</color>
-    <color name="colorPrimaryDark">#86FFEF</color>
-    <color name="colorAccent">#86FFEF</color>
+    <color name="colorPrimaryDark">#AF4341</color>
+    <color name="colorAccent">#AF4341</color>
 
     <!-- colors for button style -->
     <color name="colorcough">#D4CCCA</color>
