@@ -5,6 +5,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -31,15 +35,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 //https://www.youtube.com/watch?v=zpCRElrwXg8 this is the link for the floating button menu
 
 public class VirtualMask extends AppCompatActivity {
+    private static final String TAG = "VirtualMaskActivity";
 
     // Geolocation
     private static final int REQUEST_PERMISSIONS = 100;
     boolean boolean_permission;
     Double latitude = 0.0, longitude = 0.0;
-
     Geocoder geocoder;
 
     //Animations
@@ -72,6 +77,22 @@ public class VirtualMask extends AppCompatActivity {
         System.out.println(get_long());
         System.out.println("Current Time");
         System.out.println(get_current_time());
+
+        //Periodic Activity for minimum 15 minutes limit
+        System.out.println("Work Called");
+        Constraints constraints = new Constraints.Builder()
+                .setRequiresBatteryNotLow(true)
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .setRequiresStorageNotLow(true)
+                .build();
+
+        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
+                FifteenMinutesPeriodicWorker.class, 16, TimeUnit.MINUTES)
+                .setConstraints(constraints)
+                .build();
+
+        System.out.println("Worker Called");
+        WorkManager.getInstance(this).enqueue(periodicWorkRequest);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
