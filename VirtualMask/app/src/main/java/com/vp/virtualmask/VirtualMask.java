@@ -1,6 +1,8 @@
 package com.vp.virtualmask;
 
 import android.annotation.SuppressLint;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -10,7 +12,10 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -18,6 +23,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -60,6 +66,7 @@ public class VirtualMask extends AppCompatActivity {
     Animation fabOpen,fabClose,fabClockwise,fabAntiClockwise;
     boolean isOpen= false;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,20 +86,20 @@ public class VirtualMask extends AppCompatActivity {
         System.out.println(get_current_time());
 
         //Periodic Activity for minimum 15 minutes limit
-        System.out.println("Work Called");
-        Constraints constraints = new Constraints.Builder()
-                .setRequiresBatteryNotLow(true)
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .setRequiresStorageNotLow(true)
-                .build();
-
-        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
-                FifteenMinutesPeriodicWorker.class, 16, TimeUnit.MINUTES)
-                .setConstraints(constraints)
-                .build();
-
-        System.out.println("Worker Called");
-        WorkManager.getInstance(this).enqueue(periodicWorkRequest);
+//        System.out.println("Work Called");
+//        Constraints constraints = new Constraints.Builder()
+//                .setRequiresBatteryNotLow(true)
+//                .setRequiredNetworkType(NetworkType.CONNECTED)
+//                .setRequiresStorageNotLow(true)
+//                .build();
+//
+//        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
+//                FifteenMinutesPeriodicWorker.class, 16, TimeUnit.MINUTES)
+//                .setConstraints(constraints)
+//                .build();
+//
+//        System.out.println("Worker Called");
+//        WorkManager.getInstance(this).enqueue(periodicWorkRequest);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
@@ -174,6 +181,8 @@ public class VirtualMask extends AppCompatActivity {
                 Toast.makeText(VirtualMask.this, "tou clicked profile",Toast.LENGTH_SHORT).show();
             }
         }));
+        Log.w("just to get a nsp","do theis work");
+        scheduleJob();
     }
 
     @Override
@@ -338,6 +347,35 @@ public class VirtualMask extends AppCompatActivity {
         Long tsLong = System.currentTimeMillis()/1000;
         String ts = tsLong.toString();
         return ts;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void scheduleJob() {
+        Log.w("just to get a nsp","do theis work");
+        ComponentName componentName = new ComponentName(this, BackgroundWork.class);
+        JobInfo info = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            info = new JobInfo.Builder(123, componentName)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                    .setPersisted(true)
+                    .setPeriodic(1 * 60 * 1000)
+                    .build();
+        }
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d(TAG, "Job scheduled");
+        } else {
+            Log.d(TAG, "Job scheduling failed");
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void cancelJob() {
+        JobScheduler scheduler = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        }
+        scheduler.cancel(123);
+        Log.d(TAG, "Job cancelled");
     }
 
 }
