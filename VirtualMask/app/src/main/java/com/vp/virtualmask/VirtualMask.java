@@ -86,20 +86,19 @@ public class VirtualMask extends AppCompatActivity {
         System.out.println(get_current_time());
 
         //Periodic Activity for minimum 15 minutes limit
-//        System.out.println("Work Called");
-//        Constraints constraints = new Constraints.Builder()
-//                .setRequiresBatteryNotLow(true)
-//                .setRequiredNetworkType(NetworkType.CONNECTED)
-//                .setRequiresStorageNotLow(true)
-//                .build();
-//
-//        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
-//                FifteenMinutesPeriodicWorker.class, 16, TimeUnit.MINUTES)
-//                .setConstraints(constraints)
-//                .build();
-//
-//        System.out.println("Worker Called");
-//        WorkManager.getInstance(this).enqueue(periodicWorkRequest);
+        System.out.println("Work Called");
+        Constraints constraints = new Constraints.Builder()
+                .setRequiresBatteryNotLow(true)
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
+                FifteenMinutesPeriodicWorker.class, 16, TimeUnit.MINUTES)
+                .setConstraints(constraints)
+                .build();
+
+        System.out.println("Worker Called");
+        WorkManager.getInstance(this).enqueue(periodicWorkRequest);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
@@ -182,7 +181,7 @@ public class VirtualMask extends AppCompatActivity {
             }
         }));
         Log.w("just to get a nsp","do theis work");
-        scheduleJob();
+//        scheduleJob();
     }
 
     @Override
@@ -348,34 +347,34 @@ public class VirtualMask extends AppCompatActivity {
         String ts = tsLong.toString();
         return ts;
     }
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void scheduleJob() {
-        Log.w("just to get a nsp","do theis work");
-        ComponentName componentName = new ComponentName(this, BackgroundWork.class);
-        JobInfo info = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            info = new JobInfo.Builder(123, componentName)
-                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-                    .setPersisted(true)
-                    .setPeriodic(1 * 60 * 1000)
-                    .build();
-        }
-        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-        int resultCode = scheduler.schedule(info);
-        if (resultCode == JobScheduler.RESULT_SUCCESS) {
-            Log.d(TAG, "Job scheduled");
-        } else {
-            Log.d(TAG, "Job scheduling failed");
-        }
-    }
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void cancelJob() {
-        JobScheduler scheduler = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-        }
-        scheduler.cancel(123);
-        Log.d(TAG, "Job cancelled");
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    public void scheduleJob() {
+//        Log.w("just to get a nsp","do theis work");
+//        ComponentName componentName = new ComponentName(this, BackgroundWork.class);
+//        JobInfo info = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//            info = new JobInfo.Builder(123, componentName)
+//                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+//                    .setPersisted(true)
+//                    .setPeriodic(1 * 60 * 1000)
+//                    .build();
+//        }
+//        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+//        int resultCode = scheduler.schedule(info);
+//        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+//            Log.d(TAG, "Job scheduled");
+//        } else {
+//            Log.d(TAG, "Job scheduling failed");
+//        }
+//    }
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    public void cancelJob() {
+//        JobScheduler scheduler = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//            scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+//        }
+//        scheduler.cancel(123);
+//        Log.d(TAG, "Job cancelled");
+//    }
 
 }
