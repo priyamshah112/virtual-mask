@@ -151,6 +151,26 @@
             android:textSize="18sp"
             android:textStyle="bold|italic" />
 
+        <Button
+            android:id="@+id/remove_location_updates_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="580dp"
+            android:text="REMOVE LOCATION" />
+
+        <Button
+            android:id="@+id/request_location_updates_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="273dp"
+            android:layout_marginBottom="577dp"
+            android:text="UPDATES LOCATION" />
+
     </RelativeLayout>
 
 </FrameLayout>

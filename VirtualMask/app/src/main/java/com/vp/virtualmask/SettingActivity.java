@@ -2,14 +2,24 @@ package com.vp.virtualmask;
 
 //Not yet used will be used if required if leader board activity from google play services is not availabe
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.work.impl.model.Preference;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -22,11 +32,24 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private ProgressBar progressBar;
     private SeekBar seekBar;
@@ -34,6 +57,23 @@ public class SettingActivity extends AppCompatActivity {
     private Switch sw1;
     RadioGroup radioGroup;
     RadioButton radioButton;
+    Button requestlocation, removelocation;
+    MyBackgroundService mSerive=null;
+    private final ServiceConnection mSeriveConection =new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder iBinder) {
+            MyBackgroundService.LocalBinder binder =  (MyBackgroundService.LocalBinder)iBinder;
+            mSerive = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mSerive = null;
+            mBound = false;
+        }
+    };
+    boolean mBound=false;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -194,7 +234,89 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         });
+        Dexter.withActivity(this)
+                .withPermissions(Arrays.asList(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                        ))
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                        requestlocation = (Button) findViewById(R.id.request_location_updates_button);
+                        removelocation = (Button) findViewById(R.id.remove_location_updates_button);
+                        requestlocation.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mSerive.requestLocationUpdates();
+                            }
+                        });
+
+                        removelocation.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mSerive.removeLocationUpodates();
+                            }
+                        });
+                        setButonState(Common.requestLocationUpdates(SettingActivity.this));
+                        bindService(new Intent(SettingActivity.this,MyBackgroundService.class),mSeriveConection, Context.BIND_AUTO_CREATE);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+
+                    }
+                }).check();
+        //
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this);
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    protected void onStop() {
+        if(mBound) {
+            unbindService(mSeriveConection);
+            mBound=false;
+        }
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    private void setButonState(boolean isRequestEnable){
+        if(isRequestEnable)
+        {
+            requestlocation.setEnabled(false);
+            removelocation.setEnabled(true);
+        }
+        else{
+            requestlocation.setEnabled(true);
+            removelocation.setEnabled(false);
+
+        }
+    }
+
+    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    public void onListenLocation(SendLocationToActivity event){
+        if(event!=null){
+            String data = new StringBuilder()
+                    .append(event.getLocation().getLatitude())
+                    .append("/")
+                    .append(event.getLocation().getLongitude())
+                    .toString();
+            Toast.makeText(mSerive,data, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void checkButton(View v) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
@@ -252,5 +374,15 @@ public class SettingActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if(s.equals(Common.KEY_REQUESTING_LOCATION_UPDATES)){
+            setButtonState(sharedPreferences.getBoolean(Common.KEY_REQUESTING_LOCATION_UPDATES,false));
+        }
+    }
+
+    private void setButtonState(boolean aBoolean) {
     }
 }
