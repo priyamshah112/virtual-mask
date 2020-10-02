@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Background Location</string>
+    <string name="app_name">Virtual Mask</string>
     <string name="title_activity_splash_screen">VIrtual Mask</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>

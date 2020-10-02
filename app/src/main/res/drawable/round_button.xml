@@ -8,7 +8,7 @@
         android:color="#CC888888" >
     </stroke>
 
-    <solid android:color="@color/colorbg" />
+    <solid android:color="@color/mask_color" />
 
     <corners
         android:bottomLeftRadius="10dp"

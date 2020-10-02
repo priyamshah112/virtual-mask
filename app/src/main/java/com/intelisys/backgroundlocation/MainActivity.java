@@ -37,7 +37,7 @@ import java.util.prefs.PreferenceChangeListener;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    Button requestLocation,removeLocation;
+    Button requestLocation,removeLocation,Launch;
     private static final int LOCATION_PERMISSION_CODE = 100;
     MyBackgroundService mService = null;
     boolean mBound = false;
@@ -115,6 +115,29 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setContentView(R.layout.activity_main);
         requestLocation = (Button)findViewById(R.id.request_location_updates_button);
         removeLocation = (Button)findViewById(R.id.remove_location_updated_button);
+        Launch = (Button)findViewById(R.id.launch);
+        //requestLocation.setEnabled(false);
+        Launch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                boolean value = preferences.getBoolean("isBackgroundSet", Boolean.parseBoolean(""));
+                if(value==true){
+                    Intent intent = new Intent(MainActivity.this, VirtualMask.class);
+                    startActivity(intent);
+                }
+                else {
+                    if (value == false) {
+                        Toast.makeText(getApplicationContext(),"You have disable the location feature",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, VirtualMask.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(),"Please update the location feayure by clicking on it",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
         requestLocation.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -145,8 +168,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putBoolean("isBackgroundSet", false);
                 editor.apply();
-                Intent intent = new Intent(MainActivity.this, VirtualMask.class);
-                startActivity(intent);
+                //Intent intent = new Intent(MainActivity.this, VirtualMask.class);
+                //startActivity(intent);
             }
         });
 

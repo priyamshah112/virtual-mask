@@ -176,9 +176,11 @@ public class MyBackgroundService extends Service {
             {
                 if(longitudes[i]==0)
                 {
+                    Log.d("vkk_dev", "onNewLocation: entered the for");
                     longitudes[i]=longitude_float;
                     latitudes[i]=latitude_float;
                     ArrayEmpty=true;
+                    break;
                 }
             }
             for(int i=0;i<Mask_longitudes.length;i++)
@@ -188,16 +190,19 @@ public class MyBackgroundService extends Service {
                     Mask_longitudes[i]=longitude_float;
                     Mask_latitudes[i]=latitude_float;
                     MaskArrayEmpty=true;
+                    break;
                 }
             }
             if(MaskArrayEmpty==false){
+                Log.d("vkk_dev","the latitude last falue is " + Mask_latitudes[Mask_latitudes.length-1]);
                 for( int i = 0 ; i < Mask_longitudes.length-1; i++ ){
                     Mask_latitudes[i]=Mask_latitudes[i+1];
                     Mask_longitudes[i]=Mask_longitudes[i+1];
                 }
                 double distance = distance(latitudes[0],latitudes[latitudes.length-1],longitudes[0],longitudes[longitudes.length-1],0,0);
-                System.out.println("the distance is "+distance);
+                System.out.println("the distance in mask is "+distance);
                 if(distance<5){
+                    Log.d("vkk_dev","setting the mask status back to false");
                     SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putBoolean("MaskStatus", false);
@@ -205,6 +210,8 @@ public class MyBackgroundService extends Service {
                 }
             }
             if(ArrayEmpty==false){
+                //Log.d("vkk_dev","the latitude last falue is " + latitudes[latitudes.length-1]);
+                //Log.d("vkk_dev", "onNewLocation: entered the if");
                 for( int i = 0 ; i < longitudes.length-1; i++ ){
                     latitudes[i]=latitudes[i+1];
                     longitudes[i]=longitudes[i+1];
@@ -214,6 +221,15 @@ public class MyBackgroundService extends Service {
                 double distance = distance(latitudes[0],latitudes[latitudes.length-1],longitudes[0],longitudes[longitudes.length-1],0,0);
                 System.out.println("the distance is "+distance);
                 if(distance > 20){
+                    for( int i = 0 ; i < longitudes.length-1; i++ ){
+                        latitudes[i]=0;
+                        longitudes[i]=0;
+                    }
+                    for( int i = 0 ; i < Mask_longitudes.length-1; i++ ){
+                        Mask_latitudes[i]=0;
+                        Mask_longitudes[i]=0;
+                    }
+
                     SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
                     boolean value = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
                     if(value==false)
@@ -252,12 +268,12 @@ public class MyBackgroundService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .addAction(R.drawable.ic_baseline_launch_24,"Launch",activityPendingIntent)
                 .addAction(R.drawable.ic_baseline_cancel_24,"Remove",servicePendingIntent)
-                .setContentText(text)
+                .setContentText("Please Wear up Your Mask")
                 .setContentTitle(Common.getLocationTitle(this))
                 .setOngoing(true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setTicker(text)
+                .setTicker("Please Wear up your Mask")
                 .setWhen(System.currentTimeMillis());
         //Log.e("", "Outputting the version : "+Build.VERSION.SDK_INT+" the build version code is : "+Build.VERSION_CODES.O );
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
