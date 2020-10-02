@@ -21,6 +21,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 //https://medium.com/@droidbyme/android-shared-preference-or-session-management-login-logout-2b03d6f521f6#:~:text=For%20getting%20shared%20preference%20data,MODE_PRIVATE)%3B
 
 public class SelectGenderActivity extends AppCompatActivity {
@@ -35,11 +38,17 @@ public class SelectGenderActivity extends AppCompatActivity {
     private View mContentView;
     private View mControlsView;
     private boolean mVisible;
+    private AdView mAdView;
+
     @RequiresApi(api= Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_gender);
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);

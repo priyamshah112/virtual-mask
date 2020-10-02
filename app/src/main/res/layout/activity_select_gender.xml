@@ -47,7 +47,6 @@
             style="?metaButtonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
@@ -135,6 +134,18 @@
             android:text="Select Gender"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="-3dp"
+            android:layout_marginEnd="3dp"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-4710290828352372/9379542949"></com.google.android.gms.ads.AdView>
 
     </RelativeLayout>
 </RelativeLayout>

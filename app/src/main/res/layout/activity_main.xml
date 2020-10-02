@@ -16,18 +16,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/remove_location_updated_button"
-        android:layout_marginBottom="38dp"
+        android:layout_marginBottom="35dp"
         android:background="@color/mask_color"
-        android:text="UPDATE LOCATION" />
+        android:text="PROVIDE LOCATION PERMISSION" />
 
     <Button
         android:id="@+id/remove_location_updated_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/launch"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="55dp"
         android:background="@color/mask_color"
-        android:text="REMOVE UPDATES" />
+        android:text="REMOVE LOCATION PERMISSION" />
 
     <Button
         android:id="@+id/launch"
@@ -36,10 +36,23 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="31dp"
-        android:layout_marginEnd="49dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginStart="91dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginBottom="259dp"
         android:background="@color/mask_color"
-        android:text="Lauch" />
+        android:text="Skip" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/request_location_updates_button"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="69dp"
+        android:layout_marginBottom="64dp"
+        android:lineSpacingExtra="8sp"
+        android:text="The App requires location permission to work accurately.Your Location details lie within the app and are not stored or used by any other third party services."
+        android:textAlignment="center"
+        android:textStyle="bold" />
 
 </RelativeLayout>

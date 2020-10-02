@@ -1,6 +1,7 @@
 package com.intelisys.backgroundlocation;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -11,7 +12,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -20,6 +23,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -32,6 +41,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.sql.Array;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.prefs.PreferenceChangeListener;
 
@@ -41,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private static final int LOCATION_PERMISSION_CODE = 100;
     MyBackgroundService mService = null;
     boolean mBound = false;
+    private InterstitialAd mInterstitialAd;
 
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
@@ -108,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,24 +126,29 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         requestLocation = (Button)findViewById(R.id.request_location_updates_button);
         removeLocation = (Button)findViewById(R.id.remove_location_updated_button);
         Launch = (Button)findViewById(R.id.launch);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-4710290828352372/8066461278");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
         //requestLocation.setEnabled(false);
         Launch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                boolean value = preferences.getBoolean("isBackgroundSet", Boolean.parseBoolean(""));
-                if(value==true){
-                    Intent intent = new Intent(MainActivity.this, VirtualMask.class);
-                    startActivity(intent);
-                }
-                else {
-                    if (value == false) {
-                        Toast.makeText(getApplicationContext(),"You have disable the location feature",Toast.LENGTH_SHORT).show();
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                    boolean value = preferences.getBoolean("isBackgroundSet", Boolean.parseBoolean(""));
+                    if (value == true) {
                         Intent intent = new Intent(MainActivity.this, VirtualMask.class);
                         startActivity(intent);
-                    }
-                    else {
-                        Toast.makeText(getApplicationContext(),"Please update the location feayure by clicking on it",Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (value == false) {
+                            Toast.makeText(getApplicationContext(), "You have disable the location feature", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this, VirtualMask.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Please update the location feayure by clicking on it", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
@@ -141,35 +156,42 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         requestLocation.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION,LOCATION_PERMISSION_CODE);
-                checkPermission(Manifest.permission.ACCESS_FINE_LOCATION,LOCATION_PERMISSION_CODE);
-                checkPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION,LOCATION_PERMISSION_CODE);
-                checkPermission(Manifest.permission.FOREGROUND_SERVICE,LOCATION_PERMISSION_CODE);
-                //Log.d("VKK_DEV","The Request id passed til here the in the main activity line 76");
-                mService.requestLocationUpdates();
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION, LOCATION_PERMISSION_CODE);
+                    checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_PERMISSION_CODE);
+                    checkPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION, LOCATION_PERMISSION_CODE);
+                    checkPermission(Manifest.permission.FOREGROUND_SERVICE, LOCATION_PERMISSION_CODE);
+                    //Log.d("VKK_DEV","The Request id passed til here the in the main activity line 76");
+                    mService.requestLocationUpdates();
 
-                editor.putBoolean("isBackgroundSet", true);
-                editor.apply();
-                editor.putBoolean("MaskStatus", false);
-                editor.apply();
-                //Intent intent = new Intent(MainActivity.this, VirtualMask.class);
-                //startActivity(intent);
-
+                    editor.putBoolean("isBackgroundSet", true);
+                    editor.apply();
+                    editor.putBoolean("MaskStatus", false);
+                    editor.apply();
+                    //Intent intent = new Intent(MainActivity.this, VirtualMask.class);
+                    //startActivity(intent);
+                }
             }
         });
         removeLocation.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //Log.d("VKK_DEV","The Request id passed til here the in the main activity line 76");
-                mService.removeLocationUpdates();
-                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean("isBackgroundSet", false);
-                editor.apply();
-                //Intent intent = new Intent(MainActivity.this, VirtualMask.class);
-                //startActivity(intent);
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    //Log.d("VKK_DEV","The Request id passed til here the in the main activity line 76");
+                    mService.removeLocationUpdates();
+                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("isBackgroundSet", false);
+                    editor.apply();
+                    //Intent intent = new Intent(MainActivity.this, VirtualMask.class);
+                    //startActivity(intent);
+                }
             }
         });
 
@@ -179,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 mServiceConnection,
                 Context.BIND_AUTO_CREATE);
     }
+
 
     @Override
     protected void onStart() {
