@@ -67,13 +67,30 @@ public class VirtualMask extends AppCompatActivity {
         final ImageButton Demo_button2_women = (ImageButton) findViewById(R.id.mask_image_women);
         SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
         final int value = preferences.getInt("GenderStatus", 0);
+        boolean mask_status = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+        Log.d("vkk_dev","the vaule if the mask id :"+mask_status);
+
         Demo_button2.setVisibility(View.INVISIBLE);
         Demo_button2_women.setVisibility(View.INVISIBLE);
-        if(value==1) {
-            Demo_button_women.setVisibility(View.INVISIBLE);
+        Demo_button.setVisibility(View.INVISIBLE);
+        Demo_button_women.setVisibility(View.INVISIBLE);
+        if(mask_status==true) {
+            if (value == 1) {
+                mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
+                Demo_button2.setVisibility(View.VISIBLE);
+            } else {
+                Demo_button2_women.setVisibility(View.VISIBLE);
+                mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
+            }
         }
         else {
-            Demo_button.setVisibility(View.INVISIBLE);
+            if (value == 1) {
+                Demo_button.setVisibility(View.VISIBLE);
+                mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
+            } else {
+                Demo_button_women.setVisibility(View.VISIBLE);
+                mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
+            }
         }
         Demo_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +103,12 @@ public class VirtualMask extends AppCompatActivity {
                     Demo_button_women.setVisibility(View.INVISIBLE);
                     Demo_button2_women.setVisibility(View.INVISIBLE);
                 }
-                editor.putBoolean("MaskStatus", false);
+                editor.putBoolean("MaskStatus", true);
                 editor.apply();
                 mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
                 tv.setText("Thank you for wearing mask");
+                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                Log.d("vkk_dev","the vaule if the mask id :"+mask_statu);
             }
         });
 
@@ -104,10 +123,12 @@ public class VirtualMask extends AppCompatActivity {
                     Demo_button_women.setVisibility(View.INVISIBLE);
                     Demo_button2_women.setVisibility(View.INVISIBLE);
                 }
-                editor.putBoolean("MaskStatus", true);
+                editor.putBoolean("MaskStatus", false);
                 editor.apply();
                 mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
                 tv.setText("PLease Wear Your Mask \n And click the Image");
+                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                Log.d("vkk_dev","the vaule if the mask id :"+mask_statu);
             }
         });
         Demo_button_women.setOnClickListener(new View.OnClickListener() {
@@ -121,10 +142,12 @@ public class VirtualMask extends AppCompatActivity {
                     Demo_button_women.setVisibility(View.INVISIBLE);
                     Demo_button2_women.setVisibility(View.VISIBLE);
                 }
-                editor.putBoolean("MaskStatus", false);
+                editor.putBoolean("MaskStatus", true);
                 editor.apply();
                 mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
                 tv.setText("Thank you for wearing mask");
+                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                Log.d("vkk_dev","the vaule if the mask id :"+mask_statu);
             }
         });
         Demo_button2_women.setOnClickListener(new View.OnClickListener() {
@@ -138,10 +161,12 @@ public class VirtualMask extends AppCompatActivity {
                     Demo_button_women.setVisibility(View.VISIBLE);
                     Demo_button2_women.setVisibility(View.INVISIBLE);
                 }
-                editor.putBoolean("MaskStatus", true);
+                editor.putBoolean("MaskStatus", false);
                 editor.apply();
                 mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
                 tv.setText("PLease Wear Your Mask \n And click the Image");
+                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                Log.d("vkk_dev","the vaule if the mask id :"+mask_statu);
             }
         });
         fab_menu=findViewById(R.id.menuFloatingActionButton);
