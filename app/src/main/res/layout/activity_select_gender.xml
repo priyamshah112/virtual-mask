@@ -125,13 +125,28 @@
             android:layout_above="@+id/women_card"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="93dp"
+            android:layout_marginStart="91dp"
             android:layout_marginTop="57dp"
-            android:layout_marginEnd="89dp"
-            android:layout_marginBottom="29dp"
+            android:layout_marginEnd="91dp"
+            android:layout_marginBottom="21dp"
             android:fontFamily="serif"
             android:gravity="center"
             android:text="Select Gender"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/women_card"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="57dp"
+            android:layout_marginBottom="79dp"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:text="Please turn on your GPS."
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -142,8 +157,6 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="-3dp"
-            android:layout_marginEnd="3dp"
             app:adSize="BANNER"
             app:adUnitId="ca-app-pub-4710290828352372/9379542949"></com.google.android.gms.ads.AdView>
 
