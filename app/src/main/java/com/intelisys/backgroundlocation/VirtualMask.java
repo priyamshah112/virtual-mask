@@ -3,7 +3,10 @@ package com.intelisys.backgroundlocation;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,15 +15,26 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+
+import java.util.HashMap;
 
 //import androidx.work.Constraints;
 //import androidx.work.NetworkType;
@@ -43,6 +57,8 @@ public class VirtualMask extends AppCompatActivity {
     FloatingActionButton fab_menu,fab_setting,fab_profile;
     Animation fabOpen,fabClose,fabClockwise,fabAntiClockwise;
     boolean isOpen= false;
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private InterstitialAd mInterstitialAd;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -70,6 +86,39 @@ public class VirtualMask extends AppCompatActivity {
         boolean mask_status = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
         Log.d("vkk_dev","the vaule if the mask id :"+mask_status);
 
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-4710290828352372/8066461278");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        //Remote Config
+        HashMap<String, Object> defaultsRate = new HashMap<>();
+        defaultsRate.put("version", String.valueOf(getVersionCode()));
+
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(10) // change to 3600 on published app
+                .build();
+
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        mFirebaseRemoteConfig.setDefaultsAsync(defaultsRate);
+
+        mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
+            @Override
+            public void onComplete(@NonNull Task<Boolean> task) {
+                if (task.isSuccessful()) {
+                    final String version = mFirebaseRemoteConfig.getString("maskapp_version");
+
+                    //change package name here
+                    if(Integer.parseInt(version) > getVersionCode())
+                        showTheDialog("com.intelisys.backgroundlocation", version );
+                }
+                else Log.e("MYLOG", "mFirebaseRemoteConfig.fetchAndActivate() NOT Successful");
+
+            }
+        });
+
+
+
         Demo_button2.setVisibility(View.INVISIBLE);
         Demo_button2_women.setVisibility(View.INVISIBLE);
         Demo_button.setVisibility(View.INVISIBLE);
@@ -95,78 +144,94 @@ public class VirtualMask extends AppCompatActivity {
         Demo_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                if(value==1){
-                    Demo_button.setVisibility(View.INVISIBLE);
-                    Demo_button2.setVisibility(View.VISIBLE);
-                    Demo_button_women.setVisibility(View.INVISIBLE);
-                    Demo_button2_women.setVisibility(View.INVISIBLE);
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    if (value == 1) {
+                        Demo_button.setVisibility(View.INVISIBLE);
+                        Demo_button2.setVisibility(View.VISIBLE);
+                        Demo_button_women.setVisibility(View.INVISIBLE);
+                        Demo_button2_women.setVisibility(View.INVISIBLE);
+                    }
+                    editor.putBoolean("MaskStatus", true);
+                    editor.apply();
+                    mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
+                    tv.setText("Thank you for wearing mask");
+                    boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                    Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
                 }
-                editor.putBoolean("MaskStatus", true);
-                editor.apply();
-                mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
-                tv.setText("Thank you for wearing mask");
-                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
-                Log.d("vkk_dev","the vaule if the mask id :"+mask_statu);
             }
         });
 
         Demo_button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                if(value==1) {
-                    Demo_button.setVisibility(View.VISIBLE);
-                    Demo_button2.setVisibility(View.INVISIBLE);
-                    Demo_button_women.setVisibility(View.INVISIBLE);
-                    Demo_button2_women.setVisibility(View.INVISIBLE);
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    if (value == 1) {
+                        Demo_button.setVisibility(View.VISIBLE);
+                        Demo_button2.setVisibility(View.INVISIBLE);
+                        Demo_button_women.setVisibility(View.INVISIBLE);
+                        Demo_button2_women.setVisibility(View.INVISIBLE);
+                    }
+                    editor.putBoolean("MaskStatus", false);
+                    editor.apply();
+                    mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
+                    tv.setText("PLease Wear Your Mask \n And click the Image");
+                    boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                    Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
                 }
-                editor.putBoolean("MaskStatus", false);
-                editor.apply();
-                mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
-                tv.setText("PLease Wear Your Mask \n And click the Image");
-                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
-                Log.d("vkk_dev","the vaule if the mask id :"+mask_statu);
             }
         });
         Demo_button_women.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                if(value==2){
-                    Demo_button.setVisibility(View.INVISIBLE);
-                    Demo_button2.setVisibility(View.INVISIBLE);
-                    Demo_button_women.setVisibility(View.INVISIBLE);
-                    Demo_button2_women.setVisibility(View.VISIBLE);
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    if (value == 2) {
+                        Demo_button.setVisibility(View.INVISIBLE);
+                        Demo_button2.setVisibility(View.INVISIBLE);
+                        Demo_button_women.setVisibility(View.INVISIBLE);
+                        Demo_button2_women.setVisibility(View.VISIBLE);
+                    }
+                    editor.putBoolean("MaskStatus", true);
+                    editor.apply();
+                    mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
+                    tv.setText("Thank you for wearing mask");
+                    boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                    Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
                 }
-                editor.putBoolean("MaskStatus", true);
-                editor.apply();
-                mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
-                tv.setText("Thank you for wearing mask");
-                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
-                Log.d("vkk_dev","the vaule if the mask id :"+mask_statu);
             }
         });
         Demo_button2_women.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                if(value==2) {
-                    Demo_button.setVisibility(View.INVISIBLE);
-                    Demo_button2.setVisibility(View.INVISIBLE);
-                    Demo_button_women.setVisibility(View.VISIBLE);
-                    Demo_button2_women.setVisibility(View.INVISIBLE);
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    if (value == 2) {
+                        Demo_button.setVisibility(View.INVISIBLE);
+                        Demo_button2.setVisibility(View.INVISIBLE);
+                        Demo_button_women.setVisibility(View.VISIBLE);
+                        Demo_button2_women.setVisibility(View.INVISIBLE);
+                    }
+                    editor.putBoolean("MaskStatus", false);
+                    editor.apply();
+                    mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
+                    tv.setText("PLease Wear Your Mask \n And click the Image");
+                    boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                    Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
                 }
-                editor.putBoolean("MaskStatus", false);
-                editor.apply();
-                mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
-                tv.setText("PLease Wear Your Mask \n And click the Image");
-                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
-                Log.d("vkk_dev","the vaule if the mask id :"+mask_statu);
             }
         });
         fab_menu=findViewById(R.id.menuFloatingActionButton);
@@ -219,6 +284,44 @@ public class VirtualMask extends AppCompatActivity {
         }));
         Log.w("just to get a nsp","do theis work");
 //        scheduleJob();
+    }
+
+    private void showTheDialog(final String appPackageName, String versionFromRemoteConfig){
+        final AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Update")
+                .setMessage("New version of app is available. Version : "+versionFromRemoteConfig)
+                .setPositiveButton("UPDATE", null)
+                .show();
+
+        dialog.setCancelable(false);
+
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=" + appPackageName)));
+                }
+                catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+            }
+        });
+    }
+
+    private PackageInfo pInfo;
+    public int getVersionCode() {
+        pInfo = null;
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.i("MYLOG", "NameNotFoundException: "+e.getMessage());
+        }
+        System.out.println(pInfo.versionCode);
+        return pInfo.versionCode;
     }
 
     @Override
