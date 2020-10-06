@@ -146,22 +146,21 @@ public class VirtualMask extends AppCompatActivity {
             public void onClick(View v) {
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
-                } else {
-                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    if (value == 1) {
-                        Demo_button.setVisibility(View.INVISIBLE);
-                        Demo_button2.setVisibility(View.VISIBLE);
-                        Demo_button_women.setVisibility(View.INVISIBLE);
-                        Demo_button2_women.setVisibility(View.INVISIBLE);
-                    }
-                    editor.putBoolean("MaskStatus", true);
-                    editor.apply();
-                    mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
-                    tv.setText("Thank you for wearing mask");
-                    boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
-                    Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
                 }
+                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                if (value == 1) {
+                    Demo_button.setVisibility(View.INVISIBLE);
+                    Demo_button2.setVisibility(View.VISIBLE);
+                    Demo_button_women.setVisibility(View.INVISIBLE);
+                    Demo_button2_women.setVisibility(View.INVISIBLE);
+                }
+                editor.putBoolean("MaskStatus", true);
+                editor.apply();
+                mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
+                tv.setText("Thank you for wearing mask");
+                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
             }
         });
 
@@ -170,22 +169,22 @@ public class VirtualMask extends AppCompatActivity {
             public void onClick(View v) {
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
-                } else {
-                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    if (value == 1) {
-                        Demo_button.setVisibility(View.VISIBLE);
-                        Demo_button2.setVisibility(View.INVISIBLE);
-                        Demo_button_women.setVisibility(View.INVISIBLE);
-                        Demo_button2_women.setVisibility(View.INVISIBLE);
-                    }
-                    editor.putBoolean("MaskStatus", false);
-                    editor.apply();
-                    mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
-                    tv.setText("PLease Wear Your Mask \n And click the Image");
-                    boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
-                    Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
                 }
+                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                if (value == 1) {
+                    Demo_button.setVisibility(View.VISIBLE);
+                    Demo_button2.setVisibility(View.INVISIBLE);
+                    Demo_button_women.setVisibility(View.INVISIBLE);
+                    Demo_button2_women.setVisibility(View.INVISIBLE);
+                }
+                editor.putBoolean("MaskStatus", false);
+                editor.apply();
+                mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
+                tv.setText("PLease Wear Your Mask \n And click the Image");
+                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
+
             }
         });
         Demo_button_women.setOnClickListener(new View.OnClickListener() {
@@ -193,22 +192,22 @@ public class VirtualMask extends AppCompatActivity {
             public void onClick(View v) {
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
-                } else {
-                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    if (value == 2) {
-                        Demo_button.setVisibility(View.INVISIBLE);
-                        Demo_button2.setVisibility(View.INVISIBLE);
-                        Demo_button_women.setVisibility(View.INVISIBLE);
-                        Demo_button2_women.setVisibility(View.VISIBLE);
-                    }
-                    editor.putBoolean("MaskStatus", true);
-                    editor.apply();
-                    mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
-                    tv.setText("Thank you for wearing mask");
-                    boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
-                    Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
                 }
+                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                if (value == 2) {
+                    Demo_button.setVisibility(View.INVISIBLE);
+                    Demo_button2.setVisibility(View.INVISIBLE);
+                    Demo_button_women.setVisibility(View.INVISIBLE);
+                    Demo_button2_women.setVisibility(View.VISIBLE);
+                }
+                editor.putBoolean("MaskStatus", true);
+                editor.apply();
+                mContentView.setBackgroundColor((Color.parseColor("#E9E5E4")));
+                tv.setText("Thank you for wearing mask");
+                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
+
             }
         });
         Demo_button2_women.setOnClickListener(new View.OnClickListener() {
@@ -216,22 +215,22 @@ public class VirtualMask extends AppCompatActivity {
             public void onClick(View v) {
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
-                } else {
-                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    if (value == 2) {
-                        Demo_button.setVisibility(View.INVISIBLE);
-                        Demo_button2.setVisibility(View.INVISIBLE);
-                        Demo_button_women.setVisibility(View.VISIBLE);
-                        Demo_button2_women.setVisibility(View.INVISIBLE);
-                    }
-                    editor.putBoolean("MaskStatus", false);
-                    editor.apply();
-                    mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
-                    tv.setText("PLease Wear Your Mask \n And click the Image");
-                    boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
-                    Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
                 }
+                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                if (value == 2) {
+                    Demo_button.setVisibility(View.INVISIBLE);
+                    Demo_button2.setVisibility(View.INVISIBLE);
+                    Demo_button_women.setVisibility(View.VISIBLE);
+                    Demo_button2_women.setVisibility(View.INVISIBLE);
+                }
+                editor.putBoolean("MaskStatus", false);
+                editor.apply();
+                mContentView.setBackgroundColor((Color.parseColor("#D4CCCA")));
+                tv.setText("PLease Wear Your Mask \n And click the Image");
+                boolean mask_statu = preferences.getBoolean("MaskStatus", Boolean.parseBoolean(""));
+                Log.d("vkk_dev", "the vaule if the mask id :" + mask_statu);
+
             }
         });
         fab_menu=findViewById(R.id.menuFloatingActionButton);

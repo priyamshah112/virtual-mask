@@ -48,7 +48,7 @@ import java.util.logging.ConsoleHandler;
 
 public class MyBackgroundService extends Service {
     private static final String CHANNEL_ID = "my_channel";
-    private static final String EXTRA_STARTED_FROM_NOTIFICATION = "com.intelisys.backgroundlocation" + "started_from_notification";
+    private static final String EXTRA_STARTED_FROM_NOTIFICATION = "com.intelisys.backgroundlocation" + ".started_from_notification";
     private float latitudes[] = {0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
     private float longitudes[] = {0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
     private float Mask_latitudes[] = {0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
@@ -135,7 +135,7 @@ public class MyBackgroundService extends Service {
                 //                                          int[] grantResults)
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
-                return;
+                //return;
             }
             fusedLocationProviderClient.getLastLocation()
                     .addOnCompleteListener(new OnCompleteListener<Location>() {

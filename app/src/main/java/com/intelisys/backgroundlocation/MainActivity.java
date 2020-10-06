@@ -135,22 +135,22 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void onClick(View v) {
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
+                }
+                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                boolean value = preferences.getBoolean("isBackgroundSet", Boolean.parseBoolean(""));
+                if (value == true) {
+                    Intent intent = new Intent(MainActivity.this, VirtualMask.class);
+                    startActivity(intent);
                 } else {
-                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                    boolean value = preferences.getBoolean("isBackgroundSet", Boolean.parseBoolean(""));
-                    if (value == true) {
+                    if (value == false) {
+                        Toast.makeText(getApplicationContext(), "You have disable the location feature", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, VirtualMask.class);
                         startActivity(intent);
                     } else {
-                        if (value == false) {
-                            Toast.makeText(getApplicationContext(), "You have disable the location feature", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, VirtualMask.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Please update the location feayure by clicking on it", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(getApplicationContext(), "Please update the location feayure by clicking on it", Toast.LENGTH_SHORT).show();
                     }
                 }
+
             }
         });
         requestLocation.setOnClickListener(new View.OnClickListener(){
@@ -158,23 +158,23 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void onClick(View v) {
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
-                } else {
-                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION, LOCATION_PERMISSION_CODE);
-                    checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_PERMISSION_CODE);
-                    checkPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION, LOCATION_PERMISSION_CODE);
-                    checkPermission(Manifest.permission.FOREGROUND_SERVICE, LOCATION_PERMISSION_CODE);
-                    //Log.d("VKK_DEV","The Request id passed til here the in the main activity line 76");
-                    mService.requestLocationUpdates();
-
-                    editor.putBoolean("isBackgroundSet", true);
-                    editor.apply();
-                    editor.putBoolean("MaskStatus", false);
-                    editor.apply();
-                    //Intent intent = new Intent(MainActivity.this, VirtualMask.class);
-                    //startActivity(intent);
                 }
+                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION, LOCATION_PERMISSION_CODE);
+                checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_PERMISSION_CODE);
+                checkPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION, LOCATION_PERMISSION_CODE);
+                checkPermission(Manifest.permission.FOREGROUND_SERVICE, LOCATION_PERMISSION_CODE);
+                //Log.d("VKK_DEV","The Request id passed til here the in the main activity line 76");
+                mService.requestLocationUpdates();
+
+                editor.putBoolean("isBackgroundSet", true);
+                editor.apply();
+                editor.putBoolean("MaskStatus", false);
+                editor.apply();
+                //Intent intent = new Intent(MainActivity.this, VirtualMask.class);
+                //startActivity(intent);
+
             }
         });
         removeLocation.setOnClickListener(new View.OnClickListener(){
@@ -182,16 +182,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void onClick(View v) {
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
-                } else {
-                    //Log.d("VKK_DEV","The Request id passed til here the in the main activity line 76");
-                    mService.removeLocationUpdates();
-                    SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putBoolean("isBackgroundSet", false);
-                    editor.apply();
-                    //Intent intent = new Intent(MainActivity.this, VirtualMask.class);
-                    //startActivity(intent);
-                }
+                }     //Log.d("VKK_DEV","The Request id passed til here the in the main activity line 76");
+                mService.removeLocationUpdates();
+                SharedPreferences preferences = getSharedPreferences("gender", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("isBackgroundSet", false);
+                editor.apply();
+                //Intent intent = new Intent(MainActivity.this, VirtualMask.class);
+                //startActivity(intent);
             }
         });
 
