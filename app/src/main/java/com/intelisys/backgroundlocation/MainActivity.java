@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
             // Requesting the permission
             ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[] { permission },
-                    requestCode);
+                    new String[] { Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_BACKGROUND_LOCATION,Manifest.permission.FOREGROUND_SERVICE },
+                    123);
         }
         else {
             Toast.makeText(MainActivity.this,
@@ -143,11 +143,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     startActivity(intent);
                 } else {
                     if (value == false) {
-                        Toast.makeText(getApplicationContext(), "You have disable the location feature", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "You have disabled the location feature", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, VirtualMask.class);
                         startActivity(intent);
                     } else {
-                        Toast.makeText(getApplicationContext(), "Please update the location feayure by clicking on it", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Please provide the location access by clicking on it", Toast.LENGTH_SHORT).show();
                     }
                 }
 

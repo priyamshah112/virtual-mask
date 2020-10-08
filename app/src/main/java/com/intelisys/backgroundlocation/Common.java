@@ -19,7 +19,7 @@ public class Common {
                 .toString();
     }
     public static CharSequence getLocationTitle (MyBackgroundService myBackgroundService){
-        return String.format("Location Updated : %1$s", DateFormat.getDateInstance().format(new Date()));
+        return String.format("Virtual Mask Is Running : %1$s", DateFormat.getDateInstance().format(new Date()));
     }
 
     public static void setRequestLocationUpdates(Context context, boolean value) {

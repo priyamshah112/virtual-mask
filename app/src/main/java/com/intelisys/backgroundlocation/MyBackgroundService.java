@@ -176,7 +176,7 @@ public class MyBackgroundService extends Service {
             {
                 if(longitudes[i]==0)
                 {
-                    Log.d("vkk_dev", "onNewLocation: entered the for");
+                    Log.d("vkk_dev", "onNewLocation: entered the for"+longitude_float+" "+latitude_float);
                     longitudes[i]=longitude_float;
                     latitudes[i]=latitude_float;
                     ArrayEmpty=true;
@@ -219,7 +219,7 @@ public class MyBackgroundService extends Service {
                 longitudes[longitudes.length-1]=longitude_float;
                 latitudes[latitudes.length-1]=latitude_float;
                 double distance = distance(latitudes[0],latitudes[latitudes.length-1],longitudes[0],longitudes[longitudes.length-1],0,0);
-                System.out.println("the distance is "+distance);
+                System.out.println("the distance is "+distance+" "+latitude_float+" "+longitude_float);
                 if(distance > 20){
                     for( int i = 0 ; i < longitudes.length-1; i++ ){
                         latitudes[i]=0;
